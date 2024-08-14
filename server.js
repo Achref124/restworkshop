@@ -18,3 +18,4 @@ app.listen(process.env.PORT,(error)=>{
     error?console.log(error):console.log(`server is running on PORT ${process.env.PORT}`)
 })
 
+app.use("/api/user",require("./Routes/user"))
