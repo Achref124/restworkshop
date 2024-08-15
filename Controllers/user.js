@@ -1,6 +1,6 @@
 const user = require("../Models/user")
 const bcrypt = require('bcrypt');
-
+const jwt=require("jsonwebtoken")
 
 exports.register=async(req,res)=>{
     try {
@@ -18,7 +18,8 @@ exports.register=async(req,res)=>{
                 const hashedPassword= await bcrypt.hash(password,saltRounds)
                 newUser.password=hashedPassword
                 await newUser.save()
-                res.status(200).send({msg:"user registred successfully!",newUser})
+                const token=jwt.sign({_id:newUser._id},process.env.SEKRET_KEY)
+                res.status(200).send({msg:"user registred successfully!",newUser,token})
             }
         }
         
@@ -38,7 +39,8 @@ exports.login=async(req,res)=>{
             if(!checkedPassword){
                 res.status(400).send({msg:"email or password invalid!"})
             }else{
-                res.status(200).send({msg:"login successfully",foundUser})
+                const token=jwt.sign({_id:foundUser[0]._id},process.env.SEKRET_KEY)
+                res.status(200).send({msg:"login successfully",foundUser,token})
             }
         }
     } catch (error) {
