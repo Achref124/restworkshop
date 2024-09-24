@@ -4,7 +4,7 @@
 
 //initialState
 
-const { LOAD_USER, LOGIN_USER, REGISTER_USER, DELETE_USER, RESET_PASSWORD, ERROR_USER } = require("../ActionTypes/ActionTypes");
+const { LOAD_USER, LOGIN_USER, REGISTER_USER, DELETE_USER, RESET_PASSWORD, ERROR_USER, CURRENT_USER } = require("../ActionTypes/ActionTypes");
 
 const initialState={
     load:false,
@@ -33,6 +33,8 @@ const UserReducer=(state=initialState,{type,payload})=>{
             return{...state,load:false}
         case ERROR_USER:
             return{...state,error:payload,load:false}
+        case CURRENT_USER:
+            return{...state,load:false,user:payload}
         default:
             return state
     }

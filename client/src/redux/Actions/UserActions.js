@@ -1,4 +1,4 @@
-import { DELETE_USER, ERROR_USER, LOAD_USER, LOGIN_USER, REGISTER_USER, RESET_PASSWORD } from "../ActionTypes/ActionTypes"
+import { CURRENT_USER, DELETE_USER, ERROR_USER, LOAD_USER, LOGIN_USER, REGISTER_USER, RESET_PASSWORD } from "../ActionTypes/ActionTypes"
 import axios from "axios"
 
 
@@ -66,3 +66,21 @@ export const resetPasswordUser=(_id,newPassword)=>async(dispatch)=>{
     }
 }
 
+export const current=()=>async(dispatch)=>{
+    dispatch({type:LOAD_USER})
+    try {
+        const config = {
+            headers: {authorization: localStorage.getItem('token')}
+        }
+        const response=await axios.post("http://localhost:8000/api/user/current",config)
+        dispatch({
+            type:CURRENT_USER,
+            payload:response.data
+        })
+    } catch (error) {
+        dispatch({
+            type:ERROR_USER,
+            payload:error
+        })
+    }
+}

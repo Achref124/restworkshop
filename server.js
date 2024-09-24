@@ -8,7 +8,10 @@ const app=express()
 //middleware
 app.use(express.json())
 
-
+const cors=require("cors"); 
+const corsOptions ={ origin:'*', credentials:true, //access-control-allow-credentials:true
+ optionSuccessStatus:200, } 
+ app.use(cors(corsOptions))
 
 require('dotenv').config()
 //connect to DB
