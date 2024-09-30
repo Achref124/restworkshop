@@ -19,7 +19,7 @@ const Profile = () => {
         <Card.Text>
           phone: {user?.phone}
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Button variant="primary">delete account</Button>
       </Card.Body>
     </Card>
     </div>
