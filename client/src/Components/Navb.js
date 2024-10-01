@@ -1,12 +1,18 @@
-
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/esm/Button';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logoutUser } from '../redux/Actions/UserActions';
 
 function Navb() {
+  const dispatch = useDispatch()
+  const handleLogout = () => {
+    dispatch(logoutUser())
+  }
+  const user = useSelector(state => state.UserReducer.user);
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -14,7 +20,12 @@ function Navb() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link to={"/"} >Home</Link>
+            <Link to={"/"} >Home </Link>
+            <div> </div>
+            {
+              user ?
+                <Link to={"/profile"}> profile</Link> : null
+            }
             <Nav.Link href="#link">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -30,9 +41,18 @@ function Navb() {
           </Nav>
         </Navbar.Collapse>
       </Container>
-      <Link to={"/login"} ><Button >login</Button></Link>
-      <Link to={"/register"} > <Button >register</Button></Link>
-     
+      {
+        user ?
+        <div>
+          <Link to={"/login"}><Button onClick={handleLogout}>logout</Button></Link>
+          <Link to={"/Profile"}><Button>Profile</Button></Link>
+          </div> 
+          :
+          <div>
+            <Link to={"/login"}><Button>login</Button></Link>
+            <Link to={"/register"}><Button>register</Button></Link> 
+          </div>
+      }
     </Navbar>
   );
 }

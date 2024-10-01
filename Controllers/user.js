@@ -25,6 +25,7 @@ exports.register=async(req,res)=>{
         
     } catch (error) {
         res.status(500).send({msg:"error on register",error})
+        console.log(error)
     }
 }
 
@@ -63,7 +64,7 @@ exports.resetPassword=async(req,res)=>{
     try {
         const {_id}=req.params
         const {newPassword}=req.body
-        await user.updateOne({_id},{$set:{newPassword}})
+        await user.updateOne({_id},{$set:{password:newPassword}})
         res.status(200).send({msg:"password updated successfully!"})
     } catch (error) {
         res.status(500).send({msg:"error on updating password",error})

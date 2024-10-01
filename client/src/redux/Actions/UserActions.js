@@ -1,4 +1,4 @@
-import { CURRENT_USER, DELETE_USER, ERROR_USER, LOAD_USER, LOGIN_USER, REGISTER_USER, RESET_PASSWORD } from "../ActionTypes/ActionTypes"
+import { CURRENT_USER, DELETE_USER, ERROR_USER, LOAD_USER, LOGIN_USER, LOGOUT_USER, REGISTER_USER, RESET_PASSWORD } from "../ActionTypes/ActionTypes"
 import axios from "axios"
 
 
@@ -49,11 +49,11 @@ export const deleteUser=(_id)=>async(dispatch)=>{
         })
     }
 }
-
+/* ==================== RESET PASSWORD=================== */
 export const resetPasswordUser=(_id,newPassword)=>async(dispatch)=>{
     dispatch({type:LOAD_USER})
     try {
-        const response=await axios.put(`http://localhost:8000/api/user/resetPassword/${_id}`,newPassword)
+        const response=await axios.put(`http://localhost:8000/api/user/resetPassword/${_id}`,{newPassword})
         dispatch({
             type:RESET_PASSWORD,
             payload:response.data
@@ -82,5 +82,37 @@ export const current=()=>async(dispatch)=>{
             type:ERROR_USER,
             payload:error
         })
+    }
+}
+
+/* ============================= */
+export const updateUser = (updatedUser) => async (dispatch) => {
+    dispatch({ type: LOAD_USER });
+    try {
+        const response = await axios.put(`http://localhost:8000/api/user/update/${updatedUser._id}`, updatedUser);
+        dispatch({
+            type: CURRENT_USER,  // Si tu veux que l'utilisateur soit mis à jour immédiatement dans l'état
+            payload: response.data
+        });
+    } catch (error) {
+        dispatch({
+            type: ERROR_USER,
+            payload: error
+        });
+    }
+};
+
+/* ==================== Action Logout=================== */
+export const logoutUser = () =>(dispatch)=>{
+    try {
+        dispatch({
+            type: LOGOUT_USER,
+            payload: null
+        })
+    } catch (error) {
+        dispatch({
+            type: ERROR_USER,
+            payload: error
+        });
     }
 }
