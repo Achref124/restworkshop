@@ -29,6 +29,7 @@ const Profile = () => {
     <div>
       <h2>Profile</h2>
 
+<<<<<<< HEAD
       <Card style={{ width: '18rem' }}>
         <Card.Img variant="top" src={user?.photo} />
         <Card.Body>
@@ -49,6 +50,22 @@ const Profile = () => {
           </Button></Link>
         </Card.Body>
       </Card>
+=======
+<Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={user?.photo} />
+      <Card.Body>
+        <Card.Title>{user?.username}</Card.Title>
+        <Card.Title>email:{user?.email}</Card.Title>
+        <Card.Text>
+          age: {user?.age}
+        </Card.Text>
+        <Card.Text>
+          phone: {user?.phone}
+        </Card.Text>
+        <Button variant="primary">delete account</Button>
+      </Card.Body>
+    </Card>
+>>>>>>> 422158745f535363f78d0e5a76b0788cc5018098
     </div>
   );
 };
