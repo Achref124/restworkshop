@@ -25,7 +25,6 @@ exports.register=async(req,res)=>{
         
     } catch (error) {
         res.status(500).send({msg:"error on register",error})
-        console.log(error)
     }
 }
 
@@ -46,7 +45,6 @@ exports.login=async(req,res)=>{
         }
     } catch (error) {
         res.status(500).send({msg:"error on login",error})
-        console.log(error)
     }
 }
 
@@ -60,13 +58,20 @@ exports.deleteUser=async(req,res)=>{
     }
 }
 
-exports.resetPassword=async(req,res)=>{
+exports.resetPassword = async (req, res) => {
     try {
-        const {_id}=req.params
-        const {newPassword}=req.body
-        await user.updateOne({_id},{$set:{password:newPassword}})
-        res.status(200).send({msg:"password updated successfully!"})
+        const { _id } = req.params;
+        const { newPassword } = req.body;
+        if (!newPassword) {
+            console.log(newPassword)
+            return res.status(400).send({ msg: "New password is required!" });
+        }
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+        await user.updateOne({ _id }, { $set: { password: hashedPassword } });
+        res.status(200).send({ msg: "Password updated successfully!" });
     } catch (error) {
-        res.status(500).send({msg:"error on updating password",error})
+        res.status(500).send({ msg: "Error on updating password", error });
     }
 }
+

@@ -1,71 +1,67 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { Link, useNavigate } from 'react-router-dom'; // Pour rediriger après la suppression
-import { deleteUser } from '../redux/Actions/UserActions'; // Importer l'action deleteUser
-
+import { deleteUser, resetPasswordUser } from '../redux/Actions/UserActions';
+import { Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const user = useSelector(state => state.UserReducer.user); // Récupérer les infos utilisateur depuis Redux
-  const dispatch = useDispatch(); // Permet de dispatcher l'action deleteUser
-  const navigate = useNavigate(); // Permet de rediriger après suppression
+  const user = useSelector(state => state.UserReducer.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
 
-  // Fonction de suppression du compte
-  const handleDelete = async () => {
-    if (user) {
-      await dispatch(deleteUser(user._id)); // Dispatcher l'action de suppression
-      localStorage.removeItem('token'); // Supprimer le token du localStorage (si tu utilises un token)
-      navigate('/'); // Rediriger vers la page d'accueil après suppression
-    }
+  const togglePasswordForm = () => {
+    setShowPasswordForm(!showPasswordForm);
   };
+
+  const handleDelete = async () => {
+    await dispatch(deleteUser(user._id));
+    navigate("/");
+  };
+
+  const handleChangePassword = async () => {
+    await dispatch(resetPasswordUser(user._id, newPassword));
+    setShowPasswordForm(false);
+  };
+
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      navigate("/login");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
-    <div>
-      <h2>Profile</h2>
-
-<<<<<<< HEAD
-      <Card style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={user?.photo} />
+    <div className="container mt-5">
+      <h1 className="mb-4 text-center">Profile</h1>
+      <Card className="mx-auto" style={{ width: '18rem' }}>
+        {user?.photo && <Card.Img variant="top" src={user.photo} />}
         <Card.Body>
           <Card.Title>{user?.username}</Card.Title>
-          <Card.Title>Email: {user?.email}</Card.Title>
-          <Card.Text>
-            Age: {user?.age}
-          </Card.Text>
-          <Card.Text>
-            Phone: {user?.phone}
-          </Card.Text>
-          {/* Remplacer "Go somewhere" par "Delete" et ajouter l'événement de suppression */}
-          <Button variant="danger" onClick={handleDelete}>
-            Delete
-          </Button>
-          <Link to={"/reset_password"}>  <Button variant="primary">
-            RESET_PASSWORD
-          </Button></Link>
+          <Card.Text>Email: {user?.email}</Card.Text>
+          <Card.Text>Age: {user?.age}</Card.Text>
+          <Card.Text>Phone: {user?.phone}</Card.Text>
+          <div className="d-flex justify-content-between">
+            <Button variant="danger" onClick={handleDelete}>Delete Account</Button>
+            <Button variant="info" onClick={togglePasswordForm}>
+              {showPasswordForm ? "Cancel" : "Modify Password"}
+            </Button>
+          </div>
+          {showPasswordForm && (
+            <Form.Group className="mt-3" controlId="formNewPassword">
+              <Form.Label>New Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter new password"
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <Button variant="primary" className="mt-2" onClick={handleChangePassword}>Update Password</Button>
+            </Form.Group>
+          )}
         </Card.Body>
       </Card>
-=======
-<Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={user?.photo} />
-      <Card.Body>
-        <Card.Title>{user?.username}</Card.Title>
-        <Card.Title>email:{user?.email}</Card.Title>
-        <Card.Text>
-          age: {user?.age}
-        </Card.Text>
-        <Card.Text>
-          phone: {user?.phone}
-        </Card.Text>
-        <Button variant="primary">delete account</Button>
-      </Card.Body>
-    </Card>
->>>>>>> 422158745f535363f78d0e5a76b0788cc5018098
     </div>
   );
 };

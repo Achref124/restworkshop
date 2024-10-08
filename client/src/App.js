@@ -1,4 +1,3 @@
-
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navb from './Components/Navb';
@@ -11,9 +10,7 @@ import { useDispatch } from 'react-redux';
 import { current } from './redux/Actions/UserActions';
 import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Reset_password from './Components/Reset_password';
-
-
+import ProductList from './Components/ProductsList';
 
 function App() {
   const dispatch = useDispatch()
@@ -32,23 +29,23 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/profile' element={<Profile />} />
-        <Route path='/Reset_password' element={<Reset_password />} />
+        <Route path='/ProductsList' element={<ProductList />} />
       </Routes>
       <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Bounce}
-      />
-      {/* Same as */}
-      <ToastContainer />
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+transition={Bounce}
+/>
+{/* Same as */}
+<ToastContainer />
     </div>
   );
 }
