@@ -27,7 +27,7 @@ const ProductList = () => {
     },[])
     return (
         <div className="container mt-4">
-            <h1 className="text-center mb-4">Product List</h1>
+            <h1 className="text-center mb-4">Nos Produits</h1>
             <Button variant="primary" onClick={handleShow} className="mb-3">
                 Add New Product
             </Button>

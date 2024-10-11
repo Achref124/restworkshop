@@ -54,7 +54,7 @@ exports.updateProduct=async(req,res)=>{
         console.log(price);
         const updatedProduct = await Product.updateOne({_id},{$set:{price}});
         const products = await Product.find();
-        res.status(200).send({msg:"product updated successfully",updatedProduct,products});
+        res.status(200).send({msg:"product updated successfully",products});
     }catch(error){
         res.status(500).send({msg:"error on updating product",error});
     }

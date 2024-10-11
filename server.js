@@ -21,7 +21,10 @@ app.listen(process.env.PORT,(error)=>{
     error?console.log(error):console.log(`server is running on PORT ${process.env.PORT}`)
 })
 
-app.use("/api/user",require("./Routes/user"))
-app.use("/api/product",require("./Routes/Product"))
+app.use("/api/user",require("./Routes/user"))  
+//Routes pour les products
+app.use("/api/product",require("./Routes/Product"))  
+//Routes pour les Tasks
+app.use("/api/task",require("./Routes/Task"))
 
 //http://localhost:8000/
