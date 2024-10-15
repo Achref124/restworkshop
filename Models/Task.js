@@ -15,7 +15,7 @@ const taskSchema = new schema({
     },
     status:{
         type:String,
-        enum:["pending","in-progress","completed"]
+        default: " Not Started"
     },
     duration:{
         type:Number,

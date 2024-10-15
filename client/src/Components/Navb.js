@@ -26,6 +26,7 @@ function Navb() {
             {user && <Nav.Link as={Link} to="/profile">Profile</Nav.Link>}
             {/* {user && <Nav.Link as={Link} to="/ProductsList">Products</Nav.Link>} */}
             <Link to="/ProductsList">Products</Link>
+            <Link to="/TaskList">Tasks</Link>
             <Nav.Link href="#link">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

@@ -11,6 +11,7 @@ import { current } from './redux/Actions/UserActions';
 import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProductList from './Components/ProductsList';
+import TaskList from './Components/TaskList';
 
 function App() {
   const dispatch = useDispatch()
@@ -30,6 +31,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/ProductsList' element={<ProductList />} />
+        <Route path='/TaskList' element={<TaskList />}/>
       </Routes>
       <ToastContainer
 position="top-right"

@@ -37,7 +37,9 @@ export const getTaskById = (_id) => async (dispatch) => {
 export const getAllTask = () => async (dispatch) => {
     dispatch({ type: LOAD_TASKS })
     try {
-        const response = await axios.get(`http://localhost:8000/api/task/getAllTasks/`);
+        
+        const response = await axios.get(`http://localhost:8000/api/task/getAllTasks`);
+        console.log("malek")
         dispatch({
             type: GET_ALL_TASKS,
             payload: response.data
@@ -66,7 +68,7 @@ export const deleteTask = (_id) => async (dispatch) => {
     }
 };
 
-export const updateTask = (_id, updatedTask) => async (dispatch) => {
+export const updateTask = ({_id, updatedTask}) => async (dispatch) => {
     dispatch({ type: LOAD_TASKS })
     try {
         const response = await axios.put(`http://localhost:8000/api/task/updateTask/${_id}`, updatedTask);
